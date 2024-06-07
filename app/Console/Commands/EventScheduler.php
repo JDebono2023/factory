@@ -39,7 +39,14 @@ class EventScheduler extends Command
         $currentHour = $now->hour;
         $currentMinute = $now->minute;
 
-        Log::info('New test', [$currentHour]);
+        // Log::info('New test', [$currentHour]);
+        try {
+            // Log to the custom 'schedule' channel
+            Log::channel('schedule')->info('Scheduler executed');
+        } catch (\Exception $e) {
+            // Handle the logging error
+            error_log('Logging to schedule.log failed: ' . $e->getMessage());
+        }
 
         $start = Schedule::query()
             ->whereDate('start_time', '=', $now->toDateString()) // Check if start_date is today
@@ -51,7 +58,7 @@ class EventScheduler extends Command
 
         if ($start > 0) {
             Version::where('id', 1)->increment('version');
-            Log::info('Item Turned On');
+            Log::channel('schedule')->info('Item Turned On');
         }
 
         $end = Schedule::query()
@@ -68,7 +75,7 @@ class EventScheduler extends Command
 
         if ($end > 0) {
             Version::where('id', 1)->increment('version');
-            Log::info('Item Turned Off and Deleted');
+            Log::channel('schedule')->info('Item Turned Off and Deleted');
         }
     }
 }

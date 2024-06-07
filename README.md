@@ -27,6 +27,11 @@ Data management system created for The Factory. CMS designed to permit the Facto
 - client requirement: 
     - add and manage media for display at specific hours over the day
     - images are turned off and on via the scheduler, or can be manually turned off and on, as needed
+
+- Windows Scheduler Set-Up 
+    - Factory Custom Image Scheduler
+    - Triggers: On A Schedule, Daily, recur every 1 day, Repeat task every 1 minute, for a duration of 1 day
+    - Settings: Allow task to be run on demand, Run task asap after a scheduled start is missed, Run a new instance in parallel
     
 
 > ## Database Details

@@ -29,15 +29,16 @@ class DeleteLog extends Command
      */
     public function handle()
     {
-        Log::info('Delete function triggered');
-        $logPath = storage_path('logs');
+        try {
 
-        // Iterate through log files and delete them
-        $logFiles = File::glob($logPath . '/*.log');
-        foreach ($logFiles as $file) {
+            $logPath = storage_path('logs');
+            $file = $logPath . '/schedule.log';
             File::delete($file);
-        }
 
-        $this->info('Log files deleted successfully.');
+            Log::channel('delete_logs')->info('Log files deleted successfully.');
+        } catch (\Exception $e) {
+            // Handle the logging error
+            error_log('Logging to delete_logs.log failed: ' . $e->getMessage());
+        }
     }
 }

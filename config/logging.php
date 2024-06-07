@@ -51,6 +51,17 @@ return [
     */
 
     'channels' => [
+
+        'schedule' => [
+            'driver' => 'single', // Use 'single' driver for separate log files
+            'path' => storage_path('logs\schedule.log'), // Path to your log file
+            'level' => env('LOG_LEVEL', 'debug'), // Log level
+        ],
+        'delete_logs' => [
+            'driver' => 'single',
+            'path' => storage_path('logs\delete_logs.log'),
+            'level' => 'debug',
+        ],
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
@@ -85,7 +96,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 
